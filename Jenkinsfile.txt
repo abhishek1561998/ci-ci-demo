@@ -12,7 +12,7 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git url: 'https://github.com/YOUR_USERNAME/vite-hello-world.git', branch: 'main'
+        git url: 'https://github.com/abhishek1561998/ci-ci-demo.git', branch: 'main'
       }
     }
 
