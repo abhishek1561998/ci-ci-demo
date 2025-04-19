@@ -1,0 +1,48 @@
+pipeline {
+  agent any
+
+  environment {
+    NODE_ENV = 'production'
+  }
+
+  tools {
+    nodejs 'node-18'  // Make sure Node.js is installed in Jenkins Tools
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        git url: 'https://github.com/YOUR_USERNAME/vite-hello-world.git', branch: 'main'
+      }
+    }
+
+    stage('Install Dependencies') {
+      steps {
+        sh 'npm install'
+      }
+    }
+
+    stage('Build') {
+      steps {
+        sh 'npm run build'
+      }
+    }
+
+    stage('Archive Build') {
+      steps {
+        dir('dist') {
+          archiveArtifacts artifacts: '**', fingerprint: true
+        }
+      }
+    }
+  }
+
+  post {
+    success {
+      echo '✅ Build completed successfully!'
+    }
+    failure {
+      echo '❌ Build failed.'
+    }
+  }
+}
